@@ -81,7 +81,7 @@ scrape_configs:
 scheme: https # Use HTTPS if your Kubernetes API server has TLS enabled
 
 # Replace with your actual Kubernetes API server address and port
-server: https://&lt;your-kubernetes-api-server&gt;:6443
+server: https://<your-kubernetes-api-server>:6443
 
 # Use a Kubernetes service account to scrape metrics from the API server
 bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
@@ -90,7 +90,7 @@ bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
 - job_name: node_exporter
 
 static_configs:
-- targets: \['localhost:9100'\] # Default node_exporter port
+- targets: ['localhost:9100'] # Default node_exporter port
 ~~~
 
    - Replace &lt;your-kubernetes-api-server&gt; with your actual Kubernetes API server address. You'll need a Kubernetes service account with permissions to scrape API server metrics.
@@ -120,13 +120,13 @@ WantedBy=multi-user.target
    - Verify Grafana is running: `sudo systemctl status grafana`
 
 **Monitoring Using Prometheus Dashboard:**
-1. **Access Prometheus:** Open http://&lt;your-ec2-instance-public-ip&gt;:9090/ in your web browser.
+1. **Access Prometheus:** Open `http://<your-ec2-instance-public-ip>:9090/` in your web browser.
 2. **Explore Targets:** Go to the **Targets** menu to see if Prometheus is scraping metrics from your Kubernetes cluster and node_exporter.
 
 **Grafana Visualization**
 Now that Prometheus is up and running, collecting metrics from your Kubernetes cluster and node_exporter, it's time to leverage Grafana to visualize these metrics and create informative dashboards.
 
-1. **Access Grafana:** Open http://&lt;your-ec2-instance-public-ip&gt;:3000/ in your web browser.
+1. **Access Grafana:** Open `http://<your-ec2-instance-public-ip>:3000/` in your web browser.
 2. **Create a Prometheus Data Source:**
     - In Grafana, go to **Configuration** -> **Data Sources**.
     - Click **Add data source**.
@@ -164,7 +164,7 @@ YAML
 scheme: https # Use HTTPS if your Jenkins has TLS enabled
 
 # Replace with the actual Jenkins server URL and port
-server: https://&lt;your-jenkins-server-url&gt;:&lt;port&gt;
+server: https://<your-jenkins-server-url>:<port>
 
 # Path to the Prometheus endpoint exposed by the plugin (default: /prometheus)
 path: /prometheus
@@ -182,7 +182,7 @@ scrape_targets:
 
 Once Prometheus is scraping pipeline metrics, you can create dashboards in Grafana to visualize them. Here's how:
 
-- **Access Grafana:** Open `http://&lt;your-ec2-instance-public-ip&gt;:3000/` in your web browser.
+- **Access Grafana:** Open `http://<your-ec2-instance-public-ip>:3000/` in your web browser.
 - **Create a Dashboard:** Go to **Dashboards** -> **New dashboard**.
 - **Add Panels:** Click the **\+ Add Panel** button and select **Prometheus** as the data source.
 - **Define Metrics:** In the query bar of each panel, define the specific pipeline metrics you want to visualize. Here are some examples:
