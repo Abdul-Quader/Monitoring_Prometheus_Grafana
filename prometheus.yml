@@ -1,0 +1,18 @@
+# PATH: /etc/prometheus/prometheus.yml
+YAML
+global:
+  scrape_interval: 15s  # Scrape targets every 15 seconds
+
+scrape_configs:
+  - job_name: kubernetes
+    scheme: https   # Use HTTPS if your Kubernetes API server has TLS enabled
+    # Replace with your actual Kubernetes API server address and port
+    server: https://<your-kubernetes-api-server>:6443
+
+    # Use a Kubernetes service account to scrape metrics from the API server
+    bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+
+    # Define additional scrape targets for other components as needed
+  - job_name: node_exporter
+    static_configs:
+      - targets: ['localhost:9100']  # Default node_exporter port
