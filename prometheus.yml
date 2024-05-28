@@ -4,6 +4,7 @@ global:
   scrape_interval: 15s  # Scrape targets every 15 seconds
 
 scrape_configs:
+# Job for scraping Kubernetes metrics
   - job_name: kubernetes
     scheme: https   # Use HTTPS if your Kubernetes API server has TLS enabled
     # Replace with your actual Kubernetes API server address and port
@@ -16,3 +17,18 @@ scrape_configs:
   - job_name: node_exporter
     static_configs:
       - targets: ['localhost:9100']  # Default node_exporter port
+
+ # Job for scraping Jenkins metrics (using Jenkins Prometheus Plugin)
+  - job_name: "jenkins"
+    scheme: https  # Use HTTPS if your Jenkins has TLS enabled
+    # Replace with the actual Jenkins server URL and port
+    server: https://<your-jenkins-server-url>:<port>
+    # Path to the Prometheus endpoint exposed by the plugin (default: /prometheus)
+    path: /prometheus
+    # Define specific metric scraping rules (adjust based on your needs)
+    scrape_targets:
+      - targets: ['/jobs?status=SUCCESS']  # Example: scrape success rate metric (adjust)
+      - targets: ['/jobs?status=FAILURE']  # Example: scrape failure rate metric (adjust)
+      - targets: ['/queue']  # Example: scrape queue length metric
+      # Add additional targets for other metrics based on your needs
+
