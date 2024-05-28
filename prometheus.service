@@ -1,0 +1,14 @@
+# PATH: /etc/systemd/system/prometheus.service
+
+[Unit]
+Description=Prometheus
+After=network.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus --config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/data/prometheus
+
+[Install]
+WantedBy=multi-user.target
